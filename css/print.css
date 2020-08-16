@@ -1,0 +1,303 @@
+/* 印刷用CSS */
+
+#print-head,
+#print-foot {
+    display: none;
+}
+
+body {
+    font-family: "Noto Serif CJK JP ExtraLight";
+    font-feature-settings: "palt" on;
+    font-size: 10pt;
+    line-height: 1.6em;
+    /*  letter-spacing: 1.05em;*/
+    text-align: justify;
+    text-justify: inter-ideograph;
+    /* 章番号リセット */
+    counter-reset: ChapterNum SubChapterNum SectionNum;
+    /*  margin: 30mm 30mm 30mm 0mm;*/
+    /*  padding: 10mm 10mm 10mm 0mm;*/
+}
+
+/* ページの設定 */
+
+@page {
+    font-family: "Noto Serif CJK JP ExtraLight";
+    font-size: 10pt;
+    line-height: 1.6em;
+/*    counter-increment: page;*/
+    /* 本のサイズ */
+    /*    size: 182mm 257mm;*/
+    size: 188mm 263mm;
+    margin-top: 13mm;
+    margin-bottom: 13mm;
+    margin-left: 18mm;
+    margin-right: 18mm;
+    /*    letter-spacing: 1.05em;*/
+    vertical-align: top;
+    /*    marks: crop cross;   */
+    /* トンボを付ける */
+    /*    bleed: 3mm;           */
+    /* 塗り足し領域 */
+}
+
+
+/* 見開きページの右側の設定 */
+
+@page: right {
+    border-top: 1pt solid #000;
+    border-bottom: 1pt solid #000;
+    padding-top: 10mm;
+    padding-bottom: 10mm;
+    /* ヘッダの設定 */
+    @top-right {
+        font-family: "Noto Sans CJK JP DemiLight";
+        font-size: 10pt;
+        margin-top: 8mm;
+        /*      content: "第一章 セクションA";*/
+        content: env(doc-title);
+    }
+    /*　フッターの設定 */
+    @bottom-right {
+        margin-bottom: 8mm;
+        content: counter(page);
+    }
+}
+
+
+/* 見開きページの左側の設定 */
+
+@page: left {
+    border-top: 1pt solid #000;
+    border-bottom: 1pt solid #000;
+    padding-top: 10mm;
+    padding-bottom: 10mm;
+    /* ヘッダの設定 */
+    @top-left {
+        font-family: "Noto Sans CJK JP DemiLight";
+        font-size: 10pt;
+        margin-top: 8mm;
+        /*      content: "第一章 セクションA";*/
+        content: env(pub-title);
+    }
+    /*　フッターの設定 */
+    @bottom-left {
+        margin-bottom: 8mm;
+        content: counter(page);
+    }
+}
+
+
+/* 署名用CSSの読み込み */
+
+@import url("signature.css");
+
+/* 見出しの設定 */
+
+h1 {
+    /* 見出し1が登場したら左のページにする */
+    page-break-before: left;
+    font-family: "Noto Sans CJK JP";
+    font-size: 32pt;
+    line-height: 1.3em;
+    /*     padding-top: 2em;*/
+    string-set: Chapter self;
+    counter-reset: SubChapterNum FigImageNum FigTableNum FigCodeNum;
+    /* 見出しに下線を引く */
+    border-bottom: 5px solid #00aa44;
+}
+
+h1:first-child {
+    page-break-before: avoid;
+}
+
+h1::before {
+    /* 見出しの前に章番号を付加する */
+    counter-increment: ChapterNum;
+    content: counter(ChapterNum) ". ";
+}
+
+h1::after {}
+
+h2 {
+    font-family: "Noto Sans CJK JP";
+    font-size: 18pt;
+    line-height: 1.2em;
+    padding-left: 10px;
+    counter-reset: SectionNum;
+    /*    border-top: 1px solid #ff00ff;*/
+    border-left: 10px solid #00aa44;
+    /*    border-right: 1px solid #ff00ff;*/
+    border-bottom: 1px solid #00aa44;
+}
+
+h2::before {
+    counter-increment: SubChapterNum;
+    content: counter(ChapterNum) "-" counter(SubChapterNum) ". ";
+}
+
+h3 {
+    font-family: "Noto Sans CJK JP";
+    font-size: 16pt;
+    line-height: 1.2em;
+    border-bottom: 1px solid #00aa44;
+}
+
+h3::before {
+    counter-increment: SectionNum;
+    content: counter(ChapterNum) "-" counter(SubChapterNum) "-" counter(SectionNum) ". ";
+}
+
+h4 {
+    font-family: "Noto Sans CJK JP Light";
+    font-size: 14pt;
+    line-height: 1.2em;
+}
+
+h5 {
+    font-family: "Noto Sans CJK JP DemiLight";
+    font-size: 12pt;
+    line-height: 1.2em;
+}
+
+h6 {
+    font-family: "Noto Sans CJK JP DemiLight";
+    font-size: 10pt;
+    line-height: 1.2em;
+}
+
+a {
+    color: #000;
+    text-decoration: none;
+}
+
+figure {
+    margin: 0px 0px 0px 0px;
+    /* text-align: center; */
+    /* position: relative; */
+    /* margin: auto; */
+}
+
+
+/* コード */
+
+pre {
+    background-color: #f0f0ff;
+    border-style: solid;
+    border-width: 1px;
+    margin: 0px;
+    padding: 1px;
+    padding: 10px;
+    white-space: pre-wrap;
+    text-align: left;
+}
+
+code {
+    white-space: pre-wrap;
+    text-align: left;
+    font-size: 9pt;
+    padding: 1px;
+    /*    font-family: 'Latin Modern Mono Light';*/
+    font-family: 'Rounded M+ 1mn thin';
+    /*    font-family: 'Noto Sans Mono CJK JP';*/
+    background-color: #f0f0ff;
+}
+
+
+/* 図表番号 */
+
+figcaption.image::before {
+    counter-increment: FigImageNum;
+    content: "図" counter(ChapterNum) "-" counter(FigImageNum) ": ";
+}
+
+figcaption.table::before {
+    counter-increment: FigTableNum;
+    content: "表" counter(ChapterNum) "-" counter(FigTableNum) ": ";
+}
+
+figcaption.code:before {
+    counter-increment: FigCodeNum;
+    content: "リスト" counter(ChapterNum) "-" counter(FigCodeNum) ": ";
+}
+
+.frontmatter a::after {
+    content: target-counter(attr(href url), page, lower-roman)
+}
+
+.bodymatter a::after {
+    content: target-counter(attr(href url), page)
+}
+
+.ChapterRef::before {
+    content: "第" target-counter(attr(href, url), ChapterNum) "章";
+}
+
+.SubChapterRef::before {
+    content: target-counter(attr(href, url), ChapterNum) "-" target-counter(attr(href, url), SubChapterNum) ".";
+}
+
+.SectionRef::before {
+    content: target-counter(attr(href, url), ChapterNum) "-" target-counter(attr(href, url), SubChapterNum) "-" target-counter(attr(href, url), SectionNum) ".";
+}
+
+.PageRef::after {
+    content: "(page " target-counter(attr(href, url), page) ")";
+}
+
+.FigImageRef::before {
+    content: "図" target-counter(attr(href, url), ChapterNum) "-" target-counter(attr(href, url), FigImageNum);
+}
+
+.FigTableRef::before {
+    content: "表" target-counter(attr(href, url), ChapterNum) "-" target-counter(attr(href, url), FigTableNum);
+}
+
+.FigCodeRef::before {
+    content: "リスト" target-counter(attr(href, url), ChapterNum) "-" target-counter(attr(href, url), FigCodeNum);
+}
+
+
+/* 表 */
+
+table {
+    border-collapse: collapse;
+}
+
+table,
+th,
+td {
+    border: 1px solid black;
+    padding: 3px;
+}
+
+th {
+    background-color: rgb(134, 215, 218)
+}
+
+div.TableView {
+    max-width: 100%;
+}
+
+
+/* 図 */
+
+img {
+    max-width: 100%;
+    /*    border: 1px #888 solid;*/
+}
+
+.img {
+    text-align: center;
+}
+
+.tbl {
+    /*    text-align:center;*/
+}
+
+
+/* 改ページ */
+
+div.newPage {
+    page-break-before: always;
+}

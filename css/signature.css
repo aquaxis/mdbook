@@ -1,0 +1,32 @@
+
+    @page:right{
+        @top-center {
+        font-size: 10pt;
+        font-family: "Noto Sans CJK JP Regular";
+        margin-top: 8mm;
+        content: "";
+        }
+
+        @bottom-center {
+            font-size: 10pt;
+            font-family: "Noto Sans CJK JP Regular";
+            margin-top: 8mm;
+            content: "";
+        }
+    }
+
+    @page:left{
+        @top-center {
+        font-size: 10pt;
+        font-family: "Noto Sans CJK JP Regular";
+        margin-top: 8mm;
+        content: "";
+        }
+
+        @bottom-center {
+            font-size: 10pt;
+            font-family: "Noto Sans CJK JP Regular";
+            margin-top: 8mm;
+            content: "";
+        }
+    }

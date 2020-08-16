@@ -1,0 +1,19 @@
+@import url("print.css");
+
+body {
+    counter-reset: ChapterNum 0;
+    /*  column-count: 2;*/
+    column-gap: 0.18in;
+}
+
+@page: right {
+    @top-right {
+        content: "Book from markdownとは"
+    }
+}
+
+@page: left {
+    @top-left {
+        content: "Book from markdown"
+    }
+}
