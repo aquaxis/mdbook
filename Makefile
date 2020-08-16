@@ -28,7 +28,7 @@ chapter99: chapter99.md
 	node js/createHTML.js chapter99
 
 setup:
-	npm -install puppeteer jsdom
+	npm install puppeteer jsdom
 	wget https://www.petitmonte.com/pdfdesigner/pdf-designer.zip
 	unzip -d tmp pdf-designer.zip
 	mv tmp/*.js js
